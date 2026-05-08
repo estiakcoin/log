@@ -3,7 +3,7 @@
 // সকল পেজে ব্যবহৃত shared utilities
 // ============================================================
 
-const GAS_URL = "YOUR_GAS_WEBAPP_URL"; // 👈 Google Apps Script deploy URL বসাও
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzQBE9Og7IQClZL3a7Qt-3OoisKrBxCMz3oj2p2DWftPXtTZAAETkYj-CdSa3z6aAfFOA/exec"; // 👈 Google Apps Script deploy URL বসাও
 
 // ============================================================
 // API CALL
