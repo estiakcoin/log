@@ -15,7 +15,7 @@ body{
   min-height:100vh;
   background:radial-gradient(ellipse at 20% 10%,#1a1060 0%,#0d0b1e 45%,#060412 100%);
   color:#e8eaf6;
-  padding:0 0 40px 0;
+  padding:0 0 calc(40px + env(safe-area-inset-bottom,0px)) 0;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
@@ -25,32 +25,23 @@ body{
   justify-content:center;
 }
 
-/* ── RESPONSIVE CONTAINER ── */
+/* ── RESPONSIVE CONTAINER (মোবাইল অপ্টিমাইজড) ── */
 .app-shell {
   width: 100%;
-  max-width: 480px;       /* মোবাইল অ্যাপের মতো */
+  max-width: 480px;
   margin: 0 auto;
-}
-@media (min-width: 768px) {
-  .app-shell {
-    max-width: 720px;      /* ট্যাবলেট ও ছোট পিসি */
-  }
-}
-@media (min-width: 1024px) {
-  .app-shell {
-    max-width: 900px;      /* বড় পিসির স্ক্রিন */
-  }
 }
 
 /* ── TOPBAR ── */
 #topbar{
-  position:sticky;top:0;z-index:200;
+  position:sticky;top:0;z-index:300;
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(40px) saturate(180%);
   -webkit-backdrop-filter:blur(40px) saturate(180%);
   border-bottom:1px solid rgba(255,255,255,.22);
   box-shadow:0 4px 24px rgba(0,0,0,.2);
   width: 100%;
+  padding-top: max(env(safe-area-inset-top,0px), 14px);
 }
 .tb-in{
   max-width:100%;margin:0 auto;padding:0 16px;
@@ -366,10 +357,10 @@ body{
 .custom-dropdown{
   display:none;
   position:absolute;top:calc(100%+4px);left:0;right:0;
-  background:rgba(255,255,255,.10);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);
-  border:1px solid rgba(255,255,255,.3);border-radius:14px;
-  z-index:100;max-height:180px;overflow-y:auto;
-  box-shadow:0 12px 30px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);
+  background-color:#1a1635;
+  border:1px solid rgba(255,255,255,.18);border-radius:14px;
+  z-index:9999;max-height:180px;overflow-y:auto;
+  box-shadow:0 14px 32px rgba(0,0,0,.65);
 }
 .custom-dropdown.open{display:block;}
 .dropdown-item{
@@ -436,29 +427,34 @@ body{
 
 /* 💜 পার্পল অ্যাকশন (বণ্টন নিশ্চিত / লেনদেন যোগ) */
 .btn-p{
-  background:linear-gradient(135deg, rgba(99,102,241,.7) 0%, rgba(124,58,237,.7) 100%);
-  border:1px solid rgba(165,180,252,.4);
+  background:linear-gradient(135deg, #818cf8 0%, #6366f1 45%, #8b5cf6 100%);
+  border:1px solid rgba(199,210,254,.5);
   color:#fff;
+  box-shadow:0 8px 22px rgba(99,102,241,.35),inset 0 1px 0 rgba(255,255,255,.3);
 }
 .btn-p:hover{
-  background:linear-gradient(135deg, rgba(99,102,241,.9) 0%, rgba(124,58,237,.9) 100%);
-  box-shadow:0 12px 28px rgba(99,102,241,.35);
+  background:linear-gradient(135deg, #93a0fa 0%, #7c3aed 50%, #a78bfa 100%);
+  box-shadow:0 14px 30px rgba(99,102,241,.4),inset 0 1px 0 rgba(255,255,255,.35);
   transform:translateY(-2px);
 }
 .btn-p:active{transform:scale(.96);}
 
 /* 🧡 স্টক আপডেট / কয়েন বণ্টন */
 .btn-go{
-  background:linear-gradient(135deg, rgba(180,83,9,.6) 0%, rgba(217,119,6,.6) 100%);
-  border:1px solid rgba(251,191,36,.3);
-  color:#fff8e1;
+  background:linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  border:1px solid rgba(253,230,138,.55);
+  color:#3a2305;
+  box-shadow:0 8px 22px rgba(245,158,11,.35),inset 0 1px 0 rgba(255,255,255,.35);
 }
 .btn-go:hover{
-  background:linear-gradient(135deg, rgba(180,83,9,.8) 0%, rgba(217,119,6,.8) 100%);
-  box-shadow:0 12px 28px rgba(245,158,11,.35);
+  background:linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #ea8a06 100%);
+  box-shadow:0 14px 30px rgba(245,158,11,.4),inset 0 1px 0 rgba(255,255,255,.4);
   transform:translateY(-2px);
 }
 .btn-go:active{transform:scale(.96);}
+
+/* 📐 ফুল-উইডথ প্রিমিয়াম বাটন (স্টক আপডেট / বণ্টন নিশ্চিত) */
+.btn-full{width:100%;font-size:15px;}
 
 /* 👻 গ্লাস ঘোস্ট (সব লেনদেন, ইউজার, ইত্যাদি) */
 .btn-gh{
@@ -474,6 +470,33 @@ body{
   transform:translateY(-2px);
 }
 .btn-gh:active{transform:scale(.96);}
+
+/* 🟪 কুইক অ্যাকশন গ্লাসমর্ফিজম বাটন (ড্যাশবোর্ড) */
+.btn-quick{
+  flex-direction:column;
+  gap:7px;
+  padding:16px 8px;
+  font-size:12.5px;
+  min-height:78px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:18px;
+  color:rgba(255,255,255,.85);
+  box-shadow:0 8px 22px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.16);
+}
+.btn-quick i{font-size:19px;}
+.btn-quick:hover{background:rgba(255,255,255,.13);transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.22);}
+.btn-quick:active{transform:scale(.96);}
+.btn-quick.q-green{border-color:rgba(52,211,153,.4);}
+.btn-quick.q-green i{color:#34d399;filter:drop-shadow(0 0 6px rgba(52,211,153,.5));}
+.btn-quick.q-gold{border-color:rgba(251,191,36,.4);}
+.btn-quick.q-gold i{color:#fbbf24;filter:drop-shadow(0 0 6px rgba(251,191,36,.5));}
+.btn-quick.q-purple{border-color:rgba(167,139,250,.4);}
+.btn-quick.q-purple i{color:#a78bfa;filter:drop-shadow(0 0 6px rgba(167,139,250,.5));}
+.btn-quick.q-blue{border-color:rgba(96,165,250,.4);}
+.btn-quick.q-blue i{color:#60a5fa;filter:drop-shadow(0 0 6px rgba(96,165,250,.5));}
 
 /* ⭐ প্রিমিয়াম ওভাল (সাম্প্রতিক লেনদেন) */
 .btn-premium{
@@ -579,10 +602,10 @@ body{
   <!-- Admin quick actions -->
   <div id="d-adminActions" style="display:none;margin-top:12px;" class="fu">
     <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;">
-      <button class="btn btn-p" onclick="showView('financial')"><i class="fa-solid fa-plus"></i> লেনদেন যোগ</button>
-      <button class="btn btn-go" onclick="showView('coin')"><i class="fa-solid fa-coins"></i> কয়েন বণ্টন</button>
-      <button class="btn btn-gh" onclick="showView('transactions')"><i class="fa-solid fa-list"></i> সব লেনদেন</button>
-      <button class="btn btn-gh" onclick="showView('users')"><i class="fa-solid fa-users"></i> ইউজার</button>
+      <button class="btn btn-quick q-green" onclick="showView('financial')"><i class="fa-solid fa-circle-plus"></i> লেনদেন যোগ</button>
+      <button class="btn btn-quick q-gold" onclick="showView('coin')"><i class="fa-solid fa-coins"></i> কয়েন বণ্টন</button>
+      <button class="btn btn-quick q-purple" onclick="showView('transactions')"><i class="fa-solid fa-list-ul"></i> সব লেনদেন</button>
+      <button class="btn btn-quick q-blue" onclick="showView('users')"><i class="fa-solid fa-users"></i> ইউজার</button>
     </div>
   </div>
 </div>
@@ -609,7 +632,7 @@ body{
 
   <!-- অ্যাড ফর্ম (ইউজার ড্রপডাউন সহ) -->
   <div class="card" id="f-addForm" style="display:none;margin-bottom:12px;padding:15px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px;">নতুন লেনদেন যোগ করুন</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px;">আয় / ব্যয় — নতুন এন্ট্রি যোগ করুন</div>
     <div class="fld">
       <label>ইউজার নির্বাচন</label>
       <div class="dropdown-wrap" id="f-user-dropdown-wrap">
@@ -659,7 +682,7 @@ body{
     <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px;">কয়েন স্টক আপডেট</div>
     <div class="fld"><label>পরিমাণ (+ যোগ / - বিয়োগ)</label><input class="inp" type="number" id="c-stockAmt" placeholder="e.g. 500 বা -100" inputmode="numeric"></div>
     <div class="fld"><label>কারণ</label><input class="inp" type="text" id="c-stockReason" placeholder="কারণ লিখুন..."></div>
-    <button class="btn btn-go" onclick="updateStock()"><i class="fa-solid fa-coins"></i> স্টক আপডেট</button>
+    <button class="btn btn-go btn-full" onclick="updateStock()"><i class="fa-solid fa-coins"></i> স্টক আপডেট</button>
   </div>
 
   <!-- কয়েন বণ্টন (শুধু কয়েন) -->
@@ -679,7 +702,7 @@ body{
     </div>
     <div class="fld"><label>পরিমাণ</label><input class="inp" type="number" id="c-amt" placeholder="0" inputmode="decimal"></div>
     <div class="fld"><label>নোট</label><input class="inp" type="text" id="c-note" placeholder="কারণ..."></div>
-    <button class="btn btn-p" id="c-distBtn" onclick="distribute()">বণ্টন নিশ্চিত করুন</button>
+    <button class="btn btn-p btn-full" id="c-distBtn" onclick="distribute()"><i class="fa-solid fa-paper-plane"></i> বণ্টন নিশ্চিত করুন</button>
   </div>
 
   <!-- কয়েন লেজার (শুধু কয়েন ফিল্টার) -->
@@ -767,204 +790,6 @@ body{
 </div><!-- /app-shell -->
 
 <script>
-/* ═══════════════════════ MOCK API & LOCAL STORAGE ═══════════════════════ */
-// ডেমো ডেটা ও লোকাল স্টোরেজ ব্যাকএন্ড
-const DEMO_DATA = {
-  users: [
-    { username: "Admin", password: "123456", role: "admin", status: "active" },
-    { username: "sahariya12", password: "123456", role: "user", status: "active" },
-    { username: "Rakib_Hasan", password: "123456", role: "user", status: "active" },
-    { username: "Nabila_Akter", password: "123456", role: "user", status: "active" }
-  ],
-  transactions: [
-    { id: "tx1", type: "in", reason: "sahariya12: প্রজেক্ট পেমেন্ট", amount: 15000, date: "2025-03-01 10:30" },
-    { id: "tx2", type: "out", reason: "Rakib_Hasan: অফিস খরচ", amount: 5000, date: "2025-03-02 12:15" },
-    { id: "tx3", type: "in", reason: "Nabila_Akter: ফ্রিল্যান্স কাজ", amount: 8000, date: "2025-03-03 14:00" }
-  ],
-  coinLedger: [
-    { id: "cl1", direction: "give_coin", targetUser: "sahariya12", amount: 500, note: "বোনাস", date: "2025-03-01 11:00", admin: "Admin" },
-    { id: "cl2", direction: "take_coin", targetUser: "Rakib_Hasan", amount: 200, note: "জরিমানা", date: "2025-03-02 13:45", admin: "Admin" }
-  ]
-};
-
-function getStoredData() {
-  let data = localStorage.getItem("pl_data");
-  if (data) {
-    try { return JSON.parse(data); } catch(e) {}
-  }
-  // প্রথমবার ডেমো ডেটা সেট করি
-  localStorage.setItem("pl_data", JSON.stringify(DEMO_DATA));
-  return JSON.parse(JSON.stringify(DEMO_DATA));
-}
-
-function saveData(data) {
-  localStorage.setItem("pl_data", JSON.stringify(data));
-}
-
-/* ═══════════════════════ API FUNCTION ═══════════════════════ */
-async function api(endpoint, payload) {
-  // ছোট বিলম্ব (রিয়েল অ্যাপের অনুকরণ)
-  await new Promise(r => setTimeout(r, 200));
-  const data = getStoredData();
-
-  switch (endpoint) {
-    case "getTransactions": {
-      return { success: true, transactions: data.transactions };
-    }
-    case "addTransaction": {
-      const { type, reason, amount } = payload;
-      const newTx = {
-        id: "tx" + Date.now(),
-        type,
-        reason,
-        amount: parseFloat(amount),
-        date: new Date().toISOString().replace("T", " ").substring(0, 19)
-      };
-      data.transactions.push(newTx);
-      saveData(data);
-      return { success: true, message: "সফলভাবে যোগ হয়েছে" };
-    }
-    case "updateTransaction": {
-      const { id, type, reason, amount } = payload;
-      const tx = data.transactions.find(t => t.id === id);
-      if (!tx) return { success: false, message: "পাওয়া যায়নি" };
-      tx.type = type;
-      tx.reason = reason;
-      tx.amount = parseFloat(amount);
-      saveData(data);
-      return { success: true, message: "আপডেট সফল" };
-    }
-    case "deleteTransaction": {
-      const { id } = payload;
-      const idx = data.transactions.findIndex(t => t.id === id);
-      if (idx === -1) return { success: false, message: "পাওয়া যায়নি" };
-      data.transactions.splice(idx, 1);
-      saveData(data);
-      return { success: true, message: "মুছে ফেলা হয়েছে" };
-    }
-    case "getCoinLedger": {
-      return { success: true, ledger: data.coinLedger };
-    }
-    case "getCoinBalance": {
-      let given = 0, taken = 0;
-      data.coinLedger.forEach(c => {
-        if (c.direction === "give_coin") given += parseFloat(c.amount);
-        else if (c.direction === "take_coin") taken += parseFloat(c.amount);
-      });
-      return { success: true, balance: given - taken };
-    }
-    case "distributeCoin": {
-      const { targetUser, amount, direction, note } = payload;
-      const newEntry = {
-        id: "cl" + Date.now(),
-        direction,
-        targetUser,
-        amount: parseFloat(amount),
-        note: note || "",
-        date: new Date().toISOString().replace("T", " ").substring(0, 19),
-        admin: session.username
-      };
-      data.coinLedger.push(newEntry);
-      saveData(data);
-      return { success: true, message: "কয়েন বণ্টন সফল" };
-    }
-    case "addCoinStock": {
-      // স্টক আপডেট বলতে শুধু কয়েন লেজারে এন্ট্রি যোগ হবে
-      const { amount, reason } = payload;
-      const entry = {
-        id: "cl" + Date.now(),
-        direction: parseFloat(amount) >= 0 ? "give_coin" : "take_coin",
-        targetUser: "স্টক",
-        amount: Math.abs(parseFloat(amount)),
-        note: reason || "স্টক সমন্বয়",
-        date: new Date().toISOString().replace("T", " ").substring(0, 19),
-        admin: session.username
-      };
-      data.coinLedger.push(entry);
-      saveData(data);
-      return { success: true, message: "স্টক আপডেট হয়েছে" };
-    }
-    case "getAllUsers": {
-      return { success: true, users: data.users };
-    }
-    case "register": {
-      const { username, password, role } = payload;
-      if (data.users.some(u => u.username === username)) {
-        return { success: false, message: "ইউজারনেম ইতিমধ্যে আছে" };
-      }
-      data.users.push({ username, password, role, status: "active" });
-      saveData(data);
-      return { success: true, message: "ইউজার তৈরি হয়েছে" };
-    }
-    case "blockUser": {
-      const { username } = payload;
-      const user = data.users.find(u => u.username === username);
-      if (!user) return { success: false, message: "পাওয়া যায়নি" };
-      user.status = user.status === "blocked" ? "active" : "blocked";
-      saveData(data);
-      return { success: true, message: `ইউজার ${user.status === "blocked" ? "ব্লক" : "আনব্লক"} করা হয়েছে` };
-    }
-    case "deleteUser": {
-      const { username } = payload;
-      const idx = data.users.findIndex(u => u.username === username);
-      if (idx === -1) return { success: false, message: "পাওয়া যায়নি" };
-      data.users.splice(idx, 1);
-      saveData(data);
-      return { success: true, message: "ইউজার মুছে ফেলা হয়েছে" };
-    }
-    default:
-      return { success: false, message: "অজানা API" };
-  }
-}
-
-/* ═══════════════════════ TOAST NOTIFICATION ═══════════════════════ */
-function toast(msg, type = "info") {
-  const existing = document.querySelector(".custom-toast");
-  if (existing) existing.remove();
-  const t = document.createElement("div");
-  t.className = "custom-toast";
-  t.textContent = msg;
-  const colors = {
-    success: "#10b981",
-    error: "#ef4444",
-    info: "#6366f1"
-  };
-  t.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: ${colors[type] || "#6366f1"};
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    z-index: 9999;
-    animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
-    white-space: nowrap;
-    max-width: 90vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  `;
-  const style = document.createElement("style");
-  style.textContent = `
-    @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
-  `;
-  document.head.appendChild(style);
-  document.body.appendChild(t);
-  setTimeout(() => { t.remove(); style.remove(); }, 3000);
-}
-
-/* ═══════════════════════ LOGOUT ═══════════════════════ */
-function doLogout() {
-  sessionStorage.removeItem("_pls");
-  toast("লগআউট সম্পন্ন", "info");
-  setTimeout(() => location.reload(), 500);
-}
-
 /* ═══════════════════════ AUTH (404 FIX) ═══════════════════════ */
 function _getSession(){try{return JSON.parse(sessionStorage.getItem("_pls"))}catch(e){return null}}
 function _requireAuth(){var s=_getSession();if(!s||!s.token)return{token:"demo-token",username:"Admin",role:"admin"};return s}
@@ -972,16 +797,108 @@ function _requireAuth(){var s=_getSession();if(!s||!s.token)return{token:"demo-t
 /* ═══════════════════════ GLOBAL STATE ═══════════════════════ */
 var currentView="dashboard",allTx=[],allUsers=[],coinLedger=[],allTxUsers=[],fPeriod="all",cLType="all",distDir="give",session=null;
 
-/* ═══════════════════════ SPLASH SCREEN ═══════════════════════ */
-(function(){
-  var d=document,s=d.createElement("div");s.id="eliteSplash";
-  s.innerHTML='<div class="sp-bg"></div><div class="sp-particles" id="spParticles"></div><div class="sp-center"><div class="sp-logo-ring"><svg class="sp-ring-svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="6 4" opacity=".4"/><defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#c084fc"/></linearGradient></defs></svg><div class="sp-diamond">💎</div></div><div class="sp-name-wrap"><div class="sp-name"><span class="sp-laser"></span><span class="sp-letter" style="--i:0">E</span><span class="sp-letter" style="--i:1">l</span><span class="sp-letter" style="--i:2">i</span><span class="sp-letter" style="--i:3">t</span><span class="sp-letter" style="--i:4">e</span><span class="sp-gap"> </span><span class="sp-letter sp-gold" style="--i:5">L</span><span class="sp-letter sp-gold" style="--i:6">e</span><span class="sp-letter sp-gold" style="--i:7">d</span><span class="sp-letter sp-gold" style="--i:8">g</span><span class="sp-letter sp-gold" style="--i:9">e</span><span class="sp-letter sp-gold" style="--i:10">r</span></div><div class="sp-tagline">আর্থিক ব্যবস্থাপনা সিস্টেম</div></div><div class="sp-bar-wrap"><div class="sp-bar"></div></div></div>';
-  var st=d.createElement("style");st.textContent='#eliteSplash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease,transform .7s ease}#eliteSplash.sp-hide{opacity:0;transform:scale(1.04);pointer-events:none}.sp-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,#1a0a4a 0%,#0a0618 40%,#060412 100%)}.sp-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle 300px at 20% 80%,rgba(99,102,241,.18),transparent),radial-gradient(circle 200px at 80% 20%,rgba(192,132,252,.14),transparent)}.sp-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}.sp-dot{position:absolute;border-radius:50%;animation:spFloat linear infinite;opacity:0}@keyframes spFloat{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-10vh) scale(1);opacity:0}}.sp-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:20px}.sp-logo-ring{position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center}.sp-ring-svg{position:absolute;inset:0;width:100%;height:100%;animation:spRingSpin 8s linear infinite}@keyframes spRingSpin{to{transform:rotate(360deg)}}.sp-diamond{font-size:46px;line-height:1;animation:spDiamondIn .8s cubic-bezier(.34,1.56,.64,1) .3s both;filter:drop-shadow(0 0 18px rgba(192,132,252,.8)) drop-shadow(0 0 36px rgba(99,102,241,.5))}@keyframes spDiamondIn{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0deg);opacity:1}}.sp-name-wrap{text-align:center}.sp-name{position:relative;display:inline-block;font-family:"Inter",sans-serif;font-size:clamp(28px,8vw,48px);font-weight:900;letter-spacing:-.02em;line-height:1.1;overflow:hidden}.sp-letter{display:inline-block;color:#fff;opacity:0;animation:spLetterIn .4s cubic-bezier(.34,1.4,.64,1) calc(.6s + var(--i)*.07s) both;text-shadow:0 0 20px rgba(165,180,252,.9),0 0 40px rgba(99,102,241,.6),0 2px 8px rgba(0,0,0,.5)}.sp-letter.sp-gold{color:#fbbf24;text-shadow:0 0 20px rgba(251,191,36,.9),0 0 40px rgba(245,158,11,.6),0 2px 8px rgba(0,0,0,.5)}.sp-gap{display:inline-block;width:.3em}@keyframes spLetterIn{from{opacity:0;transform:translateY(18px) scale(.8);filter:blur(6px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}.sp-laser{position:absolute;top:0;left:-40%;width:35%;height:100%;background:linear-gradient(90deg,transparent 0%,rgba(165,180,252,.08) 30%,rgba(255,255,255,.55) 50%,rgba(165,180,252,.08) 70%,transparent 100%);transform:skewX(-15deg);animation:spLaser 1.8s ease-in-out 1.4s both;pointer-events:none;z-index:3}@keyframes spLaser{from{left:-40%;opacity:0}20%{opacity:1}80%{opacity:1}to{left:130%;opacity:0}}.sp-tagline{font-family:"Inter",sans-serif;font-size:12px;font-weight:500;color:rgba(165,180,252,.55);letter-spacing:2px;text-transform:uppercase;margin-top:8px;opacity:0;animation:spFadeUp .5s ease 1.8s both}@keyframes spFadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.sp-bar-wrap{width:160px;height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}.sp-bar{height:100%;border-radius:2px;width:0%;background:linear-gradient(90deg,#6366f1,#c084fc,#fbbf24);animation:spBarFill 2.4s ease .5s both;box-shadow:0 0 8px rgba(99,102,241,.6)}@keyframes spBarFill{from{width:0%}to{width:100%}}';
-  d.head.appendChild(st);d.body.insertBefore(s,d.body.firstChild);
-  var pc=s.querySelector("#spParticles"),colors=["rgba(99,102,241,.7)","rgba(192,132,252,.7)","rgba(251,191,36,.6)","rgba(56,189,248,.5)","rgba(52,211,153,.5)"];
-  for(var i=0;i<28;i++){var dd=d.createElement("div");dd.className="sp-dot";var sz=Math.random()*4+2;dd.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+Math.random()*100+"%;background:"+colors[Math.floor(Math.random()*colors.length)]+";animation-duration:"+(Math.random()*6+5)+"s;animation-delay:"+Math.random()*4+"s;box-shadow:0 0 "+sz*2+"px currentColor";pc.appendChild(dd)}
-  setTimeout(function(){s.classList.add("sp-hide");setTimeout(function(){s.remove()},750)},3000);
-})();
+/* ═══════════════════════ LOCAL STORAGE DATA LAYER (NO API) ═══════════════════════ */
+function lsGet(key,def){try{var v=localStorage.getItem(key);return v===null?def:JSON.parse(v)}catch(e){return def}}
+function lsSet(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
+function uid(){return "id_"+Date.now()+"_"+Math.floor(Math.random()*10000)}
+function nowStr(){var d=new Date();function p(n){return n<10?"0"+n:n}return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+" "+p(d.getHours())+":"+p(d.getMinutes())}
+
+function initData(){
+  if(localStorage.getItem("pl_init"))return;
+  lsSet("pl_transactions",[
+    {id:uid(),type:"in",reason:"sahariya12: সেলস আয়",amount:1000,date:"2024-04-01 20:02",username:"sahariya12"},
+    {id:uid(),type:"out",reason:"sahariya12: শর্ট ব্যয়",amount:1150,date:"2024-04-01 20:05",username:"sahariya12"},
+    {id:uid(),type:"in",reason:"Rakib_Hasan: ফ্রিল্যান্স কাজ",amount:1850,date:"2024-04-02 18:30",username:"Rakib_Hasan"},
+    {id:uid(),type:"out",reason:"Rakib_Hasan: সার্ভিস চার্জ",amount:640,date:"2024-04-02 19:00",username:"Rakib_Hasan"},
+    {id:uid(),type:"in",reason:"Nabila_Akter: প্রিমিয়াম সেবা",amount:3200,date:"2024-04-06 10:20",username:"Nabila_Akter"},
+    {id:uid(),type:"out",reason:"Nabila_Akter: মার্কেটিং খরচ",amount:2150,date:"2024-04-06 11:30",username:"Nabila_Akter"}
+  ]);
+  lsSet("pl_coinLedger",[
+    {id:uid(),targetUser:"sahariya12",amount:8830,direction:"give_coin",note:"কয়েন ব্যালেন্স",date:"2024-04-01 19:00",admin:"Admin"},
+    {id:uid(),targetUser:"sahariya12",amount:500,direction:"give_coin",note:"বোনাস",date:"2024-04-04 20:00",admin:"Admin"},
+    {id:uid(),targetUser:"Rakib_Hasan",amount:3150,direction:"give_coin",note:"টুর্নামেন্ট জয়",date:"2024-04-03 20:00",admin:"Admin"},
+    {id:uid(),targetUser:"Rakib_Hasan",amount:500,direction:"take_coin",note:"প্রিমিয়াম আনলক",date:"2024-04-04 15:00",admin:"Admin"},
+    {id:uid(),targetUser:"Nabila_Akter",amount:760,direction:"give_coin",note:"দৈনিক বোনাস",date:"2024-04-07 08:00",admin:"Admin"}
+  ]);
+  lsSet("pl_coinStock",20000);
+  lsSet("pl_users",[
+    {username:"Admin",password:"admin123",role:"admin",status:"active"},
+    {username:"sahariya12",password:"1234",role:"user",status:"active"},
+    {username:"Rakib_Hasan",password:"1234",role:"user",status:"active"},
+    {username:"Nabila_Akter",password:"1234",role:"user",status:"active"}
+  ]);
+  localStorage.setItem("pl_init","1");
+}
+
+/* ── লোকাল ডেটা ফাংশন (api() এর বদলে) ── */
+function getTransactions(){return{success:true,transactions:lsGet("pl_transactions",[])}}
+function getCoinLedger(){return{success:true,ledger:lsGet("pl_coinLedger",[])}}
+function getCoinBalance(){return{success:true,balance:lsGet("pl_coinStock",0)}}
+function addTransaction(type,reason,amount){
+  var txs=lsGet("pl_transactions",[]);
+  txs.unshift({id:uid(),type:type,reason:reason,amount:amount,date:nowStr(),username:session.username});
+  lsSet("pl_transactions",txs);return{success:true};
+}
+function updateTransactionLocal(id,type,reason,amount){
+  var txs=lsGet("pl_transactions",[]),t=null;
+  for(var i=0;i<txs.length;i++){if(txs[i].id===id){t=txs[i];break}}
+  if(!t)return{success:false,message:"লেনদেন পাওয়া যায়নি।"};
+  t.type=type;t.reason=reason;t.amount=amount;
+  lsSet("pl_transactions",txs);return{success:true};
+}
+function deleteTransactionLocal(id){
+  var txs=lsGet("pl_transactions",[]);
+  txs=txs.filter(function(x){return x.id!==id});
+  lsSet("pl_transactions",txs);return{success:true};
+}
+function addCoinStockLocal(amount){
+  var stock=lsGet("pl_coinStock",0);stock+=amount;
+  lsSet("pl_coinStock",stock);return{success:true};
+}
+function distributeCoinLocal(targetUser,amount,direction,note){
+  var ledger=lsGet("pl_coinLedger",[]);
+  ledger.unshift({id:uid(),targetUser:targetUser,amount:amount,direction:direction,note:note,date:nowStr(),admin:session.username});
+  lsSet("pl_coinLedger",ledger);
+  var stock=lsGet("pl_coinStock",0);
+  stock += direction==="give_coin" ? -amount : amount;
+  lsSet("pl_coinStock",stock);
+  return{success:true};
+}
+function getAllUsersLocal(){return{success:true,users:lsGet("pl_users",[])}}
+function registerUserLocal(username,password,role){
+  var users=lsGet("pl_users",[]);
+  for(var i=0;i<users.length;i++){if(users[i].username===username)return{success:false,message:"এই ইউজারনেম আগে থেকেই আছে।"}}
+  users.push({username:username,password:password,role:role,status:"active"});
+  lsSet("pl_users",users);return{success:true,message:"ইউজার তৈরি হয়েছে ✅"};
+}
+function blockUserLocal(username){
+  var users=lsGet("pl_users",[]),u=null;
+  for(var i=0;i<users.length;i++){if(users[i].username===username){u=users[i];break}}
+  if(!u)return{success:false,message:"পাওয়া যায়নি।"};
+  u.status=u.status==="blocked"?"active":"blocked";
+  lsSet("pl_users",users);
+  return{success:true,message:u.status==="blocked"?"ইউজার ব্লক করা হয়েছে":"ইউজার আনব্লক করা হয়েছে"};
+}
+function deleteUserLocal(username){
+  var users=lsGet("pl_users",[]);
+  users=users.filter(function(x){return x.username!==username});
+  lsSet("pl_users",users);return{success:true,message:"ইউজার মুছে ফেলা হয়েছে"};
+}
+
+/* ── টোস্ট ও লগআউট (api ছাড়া) ── */
+function toast(msg,type){
+  var t=document.createElement("div");t.textContent=msg;
+  t.style.cssText="position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);"+
+    "background:"+(type==="error"?"rgba(220,38,38,.92)":"rgba(34,197,94,.92)")+";"+
+    "color:#fff;padding:11px 22px;border-radius:50px;font-size:13px;font-weight:600;"+
+    "z-index:9999;box-shadow:0 10px 28px rgba(0,0,0,.4);backdrop-filter:blur(10px);"+
+    "opacity:0;transition:opacity .25s,transform .25s;font-family:'Inter',sans-serif;max-width:90%;text-align:center;";
+  document.body.appendChild(t);
+  requestAnimationFrame(function(){t.style.opacity="1";t.style.transform="translate(-50%,0)"});
+  setTimeout(function(){t.style.opacity="0";t.style.transform="translate(-50%,16px)";setTimeout(function(){t.remove()},300)},2200);
+}
+function doLogout(){toast("ডেমো মোডে লগআউট নিষ্ক্রিয় রয়েছে।","error")}
+
 
 /* ═══════════════════════ VIEW ROUTER ═══════════════════════ */
 function showView(n){
@@ -996,6 +913,7 @@ function showView(n){
 
 /* ═══════════════════════ INIT ═══════════════════════ */
 document.addEventListener("DOMContentLoaded",function(){
+  initData();
   var authFn=typeof requireAuth==="function"?requireAuth:_requireAuth;
   session=authFn();if(!session)return;
   renderTopbar();
@@ -1030,7 +948,7 @@ function populateDropdown(drop,target){
 /* ═══════════════════════ DASHBOARD ═══════════════════════ */
 async function loadDashboard(){
   try{
-    var _ref=await Promise.all([api("getTransactions"),api("getCoinLedger")]),txRes=_ref[0],coinRes=_ref[1];
+    var _ref=[getTransactions(),getCoinLedger()],txRes=_ref[0],coinRes=_ref[1];
     if(txRes.success){allTx=txRes.transactions||[];updateDashStats()}
     if(coinRes.success){coinLedger=coinRes.ledger||[];updateCoinHero()}
     buildTxUsers();
@@ -1045,15 +963,16 @@ function updateDashStats(){
 function updateCoinHero(){
   var given=0,taken=0,buyers=new Set();
   coinLedger.forEach(function(c){var a=parseFloat(c.amount);if(c.direction==="give_coin"){given+=a;buyers.add(c.targetUser)}if(c.direction==="take_coin")taken+=a});
-  set("d-coinBal",fmt(given-taken)+" 🪙");set("d-coinGiven",fmt(given)+" 🪙");set("d-coinBuyers",buyers.size+" জন");
-  set("c-stock",fmt(given-taken)+" 🪙");set("c-given",fmt(given)+" 🪙");set("c-taken",fmt(taken)+" 🪙");set("c-buyers",buyers.size+" জন");
+  var stock=lsGet("pl_coinStock",0);
+  set("d-coinBal",fmt(stock)+" 🪙");set("d-coinGiven",fmt(given)+" 🪙");set("d-coinBuyers",buyers.size+" জন");
+  set("c-stock",fmt(stock)+" 🪙");set("c-given",fmt(given)+" 🪙");set("c-taken",fmt(taken)+" 🪙");set("c-buyers",buyers.size+" জন");
 }
 function buildTxUsers(){
   var map={},ensure=function(u){if(!map[u])map[u]={username:u,transactions:[]}};
   allTx.forEach(function(t){var un=t.username||session.username;ensure(un);map[un].transactions.push({type:t.type==="in"?"money_income":"money_expense",amount:parseFloat(t.amount),desc:t.reason,date:t.date})});
   coinLedger.forEach(function(c){ensure(c.targetUser);var tt=c.direction==="give_coin"?"coin_earn":"coin_spend";map[c.targetUser].transactions.push({type:tt,amount:parseFloat(c.amount),desc:c.note||c.direction,date:c.date})});
   allTxUsers=Object.values(map);
-  // ডেমো ইউজার না থাকলে অটো-জেনারেট হবে
+  if(!allTxUsers.length){allTxUsers=[{username:"sahariya12",transactions:[{type:"money_income",amount:1000,desc:"সেলসেন আয়",date:"2024-04-01 20:02"},{type:"money_expense",amount:1150,desc:"সোর্ট ব্যয়",date:"2024-04-01 20:02"},{type:"coin_earn",amount:8830,desc:"কয়েন ব্যালেন্স",date:"2024-04-01 19:00"},{type:"coin_earn",amount:500,desc:"বোনাস",date:"2024-04-04 20:00"}]},{username:"Rakib_Hasan",transactions:[{type:"money_income",amount:1850,desc:"ফ্রিল্যান্স",date:"2024-04-02 18:30"},{type:"money_expense",amount:640,desc:"সার্ভিস চার্জ",date:"2024-04-02 19:00"},{type:"coin_earn",amount:3150,desc:"টুর্নামেন্ট জয়",date:"2024-04-03 20:00"},{type:"coin_spend",amount:500,desc:"প্রিমিয়াম আনলক",date:"2024-04-04 15:00"}]},{username:"Nabila_Akter",transactions:[{type:"money_income",amount:3200,desc:"প্রিমিয়াম সেবা",date:"2024-04-06 10:20"},{type:"money_expense",amount:2150,desc:"মার্কেটিং",date:"2024-04-06 11:30"},{type:"coin_earn",amount:760,desc:"দৈনিক বোনাস",date:"2024-04-07 08:00"}]}]}
 }
 
 /* ═══════════════════════ TRANSACTIONS ═══════════════════════ */
@@ -1081,7 +1000,7 @@ function txSearch(){renderTxUsers(allTxUsers)}
 function txReset(){document.getElementById("tx-searchInp").value="";renderTxUsers(allTxUsers)}
 
 /* ═══════════════════════ FINANCIAL ═══════════════════════ */
-async function loadFinancial(){try{var res=await api("getTransactions");if(!res.success)return;allTx=res.transactions||[];renderFinancial()}catch(e){}}
+async function loadFinancial(){try{var res=getTransactions();if(!res.success)return;allTx=res.transactions||[];renderFinancial()}catch(e){}}
 function setFPeriod(p,btn){fPeriod=p;document.querySelectorAll("#view-financial .ftab").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");renderFinancial()}
 function filterPeriod(list){var now=new Date();if(fPeriod==="today"){var s=new Date(now.getFullYear(),now.getMonth(),now.getDate());return list.filter(function(t){return new Date(t.date)>=s})}if(fPeriod==="week")return list.filter(function(t){return new Date(t.date)>=new Date(now-7*864e5)});if(fPeriod==="month")return list.filter(function(t){var d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()});if(fPeriod==="year")return list.filter(function(t){return new Date(t.date).getFullYear()===now.getFullYear()});return list}
 function renderFinancial(){
@@ -1099,37 +1018,37 @@ async function addTx(type){
   var user=document.getElementById("f-user").value.trim(),amount=parseFloat(document.getElementById("f-amount").value),note=document.getElementById("f-note").value.trim();
   if(!user||isNaN(amount)||amount<=0){toast("ইউজার নির্বাচন ও সঠিক পরিমাণ দিন।","error");return}
   var reason=note?user+": "+note:user;
-  try{var res=await api("addTransaction",{type:type,reason:reason,amount:amount});if(res.success){toast(type==="in"?"আয় যোগ ✅":"ব্যয় যোগ ✅","success");document.getElementById("f-user").value="";document.getElementById("f-amount").value="";document.getElementById("f-note").value="";await loadFinancial();await loadDashboard()}else toast(res.message,"error")}catch(e){toast("সেভ হয়নি।","error")}
+  try{var res=addTransaction(type,reason,amount);if(res.success){toast(type==="in"?"আয় যোগ ✅":"ব্যয় যোগ ✅","success");document.getElementById("f-user").value="";document.getElementById("f-amount").value="";document.getElementById("f-note").value="";await loadFinancial();await loadDashboard()}else toast(res.message,"error")}catch(e){toast("সেভ হয়নি।","error")}
 }
 function openEditModal(id,type,reason,amt){set("em-id",id);set("em-type",type);document.getElementById("em-reason").value=reason;document.getElementById("em-amt").value=amt;document.getElementById("editModal").classList.add("open")}
 function closeModal(){document.getElementById("editModal").classList.remove("open")}
-async function saveEdit(){var id=document.getElementById("em-id").value,type=document.getElementById("em-type").value,reason=document.getElementById("em-reason").value.trim(),amount=parseFloat(document.getElementById("em-amt").value);if(!reason||isNaN(amount)||amount<=0){toast("সঠিক তথ্য দিন।","error");return}try{var res=await api("updateTransaction",{id:id,type:type,reason:reason,amount:amount});if(res.success){toast("আপডেট ✅","success");closeModal();await loadFinancial()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
-async function delTx(id){if(!confirm("মুছবেন?"))return;try{var res=await api("deleteTransaction",{id:id});if(res.success){toast("মুছা ✅","success");await loadFinancial()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
+async function saveEdit(){var id=document.getElementById("em-id").value,type=document.getElementById("em-type").value,reason=document.getElementById("em-reason").value.trim(),amount=parseFloat(document.getElementById("em-amt").value);if(!reason||isNaN(amount)||amount<=0){toast("সঠিক তথ্য দিন।","error");return}try{var res=updateTransactionLocal(id,type,reason,amount);if(res.success){toast("আপডেট ✅","success");closeModal();await loadFinancial()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
+async function delTx(id){if(!confirm("মুছবেন?"))return;try{var res=deleteTransactionLocal(id);if(res.success){toast("মুছা ✅","success");await loadFinancial()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
 
 /* ═══════════════════════ COIN ═══════════════════════ */
-async function loadCoin(){try{var _ref2=await Promise.all([api("getCoinBalance"),api("getCoinLedger")]),sr=_ref2[0],lr=_ref2[1];if(sr.success)set("c-stock",fmt(sr.balance)+" 🪙");if(lr.success){coinLedger=lr.ledger||[];updateCoinHero();renderCoinLedger()}}catch(e){}}
+async function loadCoin(){try{var _ref2=[getCoinBalance(),getCoinLedger()],sr=_ref2[0],lr=_ref2[1];if(lr.success){coinLedger=lr.ledger||[];updateCoinHero();renderCoinLedger()}}catch(e){}}
 function setCLType(t,btn){cLType=t;document.querySelectorAll("#view-coin .ftab").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");renderCoinLedger()}
 function renderCoinLedger(){
   var items=cLType==="all"?coinLedger:coinLedger.filter(function(c){return c.direction===cLType}),c=document.getElementById("c-ledgerList");
   if(!items.length){c.innerHTML='<div class="empty">📭 কোনো রেকর্ড নেই</div>';return}
-  var dlbl={give_coin:"🪙 কয়েন দেওয়া",take_coin:"🪙 কয়েন নেওয়া",give_money:"💵 টাকা দেওয়া",take_money:"💵 টাকা নেওয়া"};
+  var dlbl={give_coin:"🪙 কয়েন দেওয়া",take_coin:"🪙 কয়েন নেওয়া"};
   c.innerHTML=items.map(function(item){var isGive=item.direction.startsWith("give"),isCoin=item.direction.includes("coin");return'<div class="log-item"><div class="log-dot '+item.direction+'"></div><div class="log-inf"><strong>'+(dlbl[item.direction]||item.direction)+': <span style="color:#a5b4fc">'+esc(item.targetUser)+"</span>"+(item.note?" — "+esc(item.note):"")+'</strong><small>'+item.date+" · 👤 "+esc(item.admin)+'</small></div><div class="log-rt"><div class="log-amt '+item.direction+'">'+(isGive?"+":"-")+(isCoin?fmt(item.amount)+"🪙":"৳"+fmt(item.amount))+"</div></div></div>"}).join("");
 }
 function setDistDir(d){distDir=d;document.getElementById("c-giveBtn").className="btn"+(d==="give"?" btn-g":" btn-gh");document.getElementById("c-takeBtn").className="btn"+(d==="take"?" btn-r":" btn-gh")}
-async function updateStock(){var amt=parseFloat(document.getElementById("c-stockAmt").value),reason=document.getElementById("c-stockReason").value.trim();if(isNaN(amt)||amt===0||!reason){toast("পরিমাণ ও কারণ দিন।","error");return}try{var res=await api("addCoinStock",{amount:amt,reason:reason});if(res.success){toast("স্টক আপডেট ✅","success");document.getElementById("c-stockAmt").value="";document.getElementById("c-stockReason").value="";await loadCoin()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
+async function updateStock(){var amt=parseFloat(document.getElementById("c-stockAmt").value),reason=document.getElementById("c-stockReason").value.trim();if(isNaN(amt)||amt===0||!reason){toast("পরিমাণ ও কারণ দিন।","error");return}try{var res=addCoinStockLocal(amt);if(res.success){toast("স্টক আপডেট ✅","success");document.getElementById("c-stockAmt").value="";document.getElementById("c-stockReason").value="";await loadCoin()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
 async function distribute(){
   var targetUser=document.getElementById("c-user").value.trim(),amount=parseFloat(document.getElementById("c-amt").value),note=document.getElementById("c-note").value.trim();
   if(!targetUser||isNaN(amount)||amount<=0){toast("ইউজার ও পরিমাণ দিন।","error");return}
   var direction=distDir+"_coin",btn=document.getElementById("c-distBtn");btn.innerHTML='<span class="spin"></span>';btn.disabled=true;
-  try{var res=await api("distributeCoin",{targetUser:targetUser,amount:amount,direction:direction,note:note});if(res.success){toast("বণ্টন সম্পন্ন ✅","success");document.getElementById("c-user").value="";document.getElementById("c-amt").value="";document.getElementById("c-note").value="";await loadCoin()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}
-  btn.innerHTML="বণ্টন নিশ্চিত করুন";btn.disabled=false;
+  try{var res=distributeCoinLocal(targetUser,amount,direction,note);if(res.success){toast("বণ্টন সম্পন্ন ✅","success");document.getElementById("c-user").value="";document.getElementById("c-amt").value="";document.getElementById("c-note").value="";await loadCoin()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}
+  btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> বণ্টন নিশ্চিত করুন';btn.disabled=false;
 }
 
 /* ═══════════════════════ USERS ═══════════════════════ */
-async function loadUsers(){try{var res=await api("getAllUsers");if(!res.success)return;allUsers=res.users;set("u-total",allUsers.length+" জন");set("u-admins",allUsers.filter(function(u){return u.role==="admin"}).length+" জন");var c=document.getElementById("u-list");if(!c)return;c.innerHTML=allUsers.map(function(u){return'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);margin-bottom:7px;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">'+u.username[0].toUpperCase()+'</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">'+esc(u.username)+'</div><div style="font-size:10px;color:'+(u.role==="admin"?"#a5b4fc":"#34d399")+'">'+(u.role==="admin"?"👑 admin":"👤 user")+(u.status==="blocked"?' · <span style="color:#f87171">blocked</span>':"")+'</div></div>'+(u.username!=="admin"?'<div style="display:flex;gap:6px"><button class="btn btn-gh btn-sm" onclick="toggleBlock(\''+esc(u.username)+'\')">'+(u.status==="blocked"?"🔓":"🔒")+'</button><button class="btn btn-r btn-sm" onclick="deleteUser(\''+esc(u.username)+'\')"><i class="fa-solid fa-trash"></i></button></div>':'<span style="font-size:10px;color:rgba(255,255,255,.2)">protected</span>')+"</div>"}).join("")}catch(e){}}
-async function createUser(){var username=document.getElementById("u-newName").value.trim(),password=document.getElementById("u-newPass").value,role=document.getElementById("u-newRole").value;if(!username||!password){toast("সব তথ্য দিন।","error");return}var btn=document.getElementById("u-createBtn");btn.innerHTML='<span class="spin"></span>';btn.disabled=true;try{var res=await api("register",{username:username,password:password,role:role});if(res.success){toast(res.message,"success");document.getElementById("u-newName").value="";document.getElementById("u-newPass").value="";await loadUsers()}else toast(res.message,"error")}catch(e){toast("তৈরি হয়নি।","error")}btn.innerHTML='<i class="fa-solid fa-user-plus"></i> ইউজার তৈরি করুন';btn.disabled=false}
-async function toggleBlock(username){try{var res=await api("blockUser",{username:username});if(res.success){toast(res.message,"success");await loadUsers()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
-async function deleteUser(username){if(!confirm('"'+username+'" মুছবেন?'))return;try{var res=await api("deleteUser",{username:username});if(res.success){toast(res.message,"success");await loadUsers()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
+async function loadUsers(){try{var res=getAllUsersLocal();if(!res.success)return;allUsers=res.users;set("u-total",allUsers.length+" জন");set("u-admins",allUsers.filter(function(u){return u.role==="admin"}).length+" জন");var c=document.getElementById("u-list");if(!c)return;c.innerHTML=allUsers.map(function(u){return'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);margin-bottom:7px;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">'+u.username[0].toUpperCase()+'</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">'+esc(u.username)+'</div><div style="font-size:10px;color:'+(u.role==="admin"?"#a5b4fc":"#34d399")+'">'+(u.role==="admin"?"👑 admin":"👤 user")+(u.status==="blocked"?' · <span style="color:#f87171">blocked</span>':"")+'</div></div>'+(u.username!=="admin"?'<div style="display:flex;gap:6px"><button class="btn btn-gh btn-sm" onclick="toggleBlock(\''+esc(u.username)+'\')">'+(u.status==="blocked"?"🔓":"🔒")+'</button><button class="btn btn-r btn-sm" onclick="deleteUser(\''+esc(u.username)+'\')"><i class="fa-solid fa-trash"></i></button></div>':'<span style="font-size:10px;color:rgba(255,255,255,.2)">protected</span>')+"</div>"}).join("")}catch(e){}}
+async function createUser(){var username=document.getElementById("u-newName").value.trim(),password=document.getElementById("u-newPass").value,role=document.getElementById("u-newRole").value;if(!username||!password){toast("সব তথ্য দিন।","error");return}var btn=document.getElementById("u-createBtn");btn.innerHTML='<span class="spin"></span>';btn.disabled=true;try{var res=registerUserLocal(username,password,role);if(res.success){toast(res.message,"success");document.getElementById("u-newName").value="";document.getElementById("u-newPass").value="";await loadUsers()}else toast(res.message,"error")}catch(e){toast("তৈরি হয়নি।","error")}btn.innerHTML='<i class="fa-solid fa-user-plus"></i> ইউজার তৈরি করুন';btn.disabled=false}
+async function toggleBlock(username){try{var res=blockUserLocal(username);if(res.success){toast(res.message,"success");await loadUsers()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
+async function deleteUser(username){if(!confirm('"'+username+'" মুছবেন?'))return;try{var res=deleteUserLocal(username);if(res.success){toast(res.message,"success");await loadUsers()}else toast(res.message,"error")}catch(e){toast("হয়নি।","error")}}
 
 /* ═══════════════════════ UTILS ═══════════════════════ */
 function set(id,val){var el=document.getElementById(id);if(el)el.innerHTML=String(val)}
