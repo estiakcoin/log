@@ -41,7 +41,7 @@ body{
   border-bottom:1px solid rgba(255,255,255,.22);
   box-shadow:0 4px 24px rgba(0,0,0,.2);
   width: 100%;
-  padding-top: max(env(safe-area-inset-top,0px), 14px);
+  padding-top: max(calc(env(safe-area-inset-top,0px) + 10px), 24px);
 }
 .tb-in{
   max-width:100%;margin:0 auto;padding:0 16px;
@@ -586,7 +586,7 @@ body{
   <!-- Coin hero (without money) -->
   <div class="coin-hero fu" onclick="showView('coin')" style="animation-delay:.1s">
     <div style="font-size:9px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:rgba(253,230,138,.55);margin-bottom:7px;">কয়েন বণ্টন</div>
-    <div style="font-size:28px;font-weight:800;letter-spacing:-1.5px;color:#fde68a;margin-bottom:13px;line-height:1;text-shadow:0 2px 10px rgba(245,158,11,.3)" id="d-coinBal">⏳</div>
+    <div style="font-size:28px;font-weight:800;letter-spacing:-1.5px;color:#fde68a;margin-bottom:13px;line-height:1;text-shadow:0 2px 10px rgba(245,158,11,.3)" id="d-coinBal">0 🪙</div>
     <div style="display:flex;">
       <div style="flex:1"><div style="font-size:9px;color:rgba(253,230,138,.5);font-weight:500;text-transform:uppercase;letter-spacing:.5px;">দেওয়া হয়েছে</div><div style="font-size:14px;font-weight:700;color:#fbbf24;margin-top:3px;" id="d-coinGiven">0 🪙</div></div>
       <div style="flex:1;border-left:1px solid rgba(255,255,255,.08);padding-left:14px;margin-left:14px;"><div style="font-size:9px;color:rgba(253,230,138,.5);font-weight:500;text-transform:uppercase;letter-spacing:.5px;">ক্রেতা</div><div style="font-size:14px;font-weight:700;color:#fbbf24;margin-top:3px;" id="d-coinBuyers">0 জন</div></div>
@@ -669,7 +669,7 @@ body{
 
   <div class="coin-hero" style="cursor:default;">
     <div style="font-size:9px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:rgba(253,230,138,.55);margin-bottom:7px;">মোট কয়েন স্টক</div>
-    <div style="font-size:30px;font-weight:800;letter-spacing:-1.5px;color:#fde68a;margin-bottom:14px;line-height:1;text-shadow:0 2px 10px rgba(245,158,11,.3)" id="c-stock">⏳</div>
+    <div style="font-size:30px;font-weight:800;letter-spacing:-1.5px;color:#fde68a;margin-bottom:14px;line-height:1;text-shadow:0 2px 10px rgba(245,158,11,.3)" id="c-stock">0 🪙</div>
     <div style="display:flex;">
       <div style="flex:1"><div style="font-size:9px;color:rgba(253,230,138,.5);font-weight:500;text-transform:uppercase;letter-spacing:.5px;">দেওয়া</div><div style="font-size:14px;font-weight:700;color:#fbbf24;margin-top:3px;" id="c-given">0 🪙</div></div>
       <div style="flex:1;border-left:1px solid rgba(255,255,255,.08);padding-left:14px;margin-left:14px;"><div style="font-size:9px;color:rgba(253,230,138,.5);font-weight:500;text-transform:uppercase;letter-spacing:.5px;">নেওয়া</div><div style="font-size:14px;font-weight:700;color:#fbbf24;margin-top:3px;" id="c-taken">0 🪙</div></div>
@@ -716,7 +716,7 @@ body{
       <button class="ftab" onclick="setCLType('give_coin',this)">🪙 দেওয়া</button>
       <button class="ftab" onclick="setCLType('take_coin',this)">🪙 নেওয়া</button>
     </div>
-    <div id="c-ledgerList"><div class="empty">⏳ লোড হচ্ছে...</div></div>
+    <div id="c-ledgerList"><div class="empty">📭 কোনো রেকর্ড নেই</div></div>
   </div>
 </div>
 
@@ -771,7 +771,7 @@ body{
   </div>
   <div class="card" style="padding:15px;">
     <div class="sec-h"><h3><i class="fa-solid fa-users" style="color:#a5b4fc;font-size:11px"></i> সকল ইউজার</h3><button class="btn btn-gh btn-sm" onclick="loadUsers()"><i class="fa-solid fa-arrows-rotate"></i></button></div>
-    <div id="u-list"><div class="empty">⏳ লোড হচ্ছে...</div></div>
+    <div id="u-list"><div class="empty">কোনো ইউজার নেই</div></div>
   </div>
 </div>
 
@@ -899,6 +899,17 @@ function toast(msg,type){
 }
 function doLogout(){toast("ডেমো মোডে লগআউট নিষ্ক্রিয় রয়েছে।","error")}
 
+/* ═══════════════════════ SPLASH SCREEN ═══════════════════════ */
+(function(){
+  var d=document,s=d.createElement("div");s.id="eliteSplash";
+  s.innerHTML='<div class="sp-bg"></div><div class="sp-particles" id="spParticles"></div><div class="sp-center"><div class="sp-logo-ring"><svg class="sp-ring-svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="6 4" opacity=".4"/><defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#c084fc"/></linearGradient></defs></svg><div class="sp-diamond">💎</div></div><div class="sp-name-wrap"><div class="sp-name"><span class="sp-laser"></span><span class="sp-letter" style="--i:0">E</span><span class="sp-letter" style="--i:1">l</span><span class="sp-letter" style="--i:2">i</span><span class="sp-letter" style="--i:3">t</span><span class="sp-letter" style="--i:4">e</span><span class="sp-gap"> </span><span class="sp-letter sp-gold" style="--i:5">L</span><span class="sp-letter sp-gold" style="--i:6">e</span><span class="sp-letter sp-gold" style="--i:7">d</span><span class="sp-letter sp-gold" style="--i:8">g</span><span class="sp-letter sp-gold" style="--i:9">e</span><span class="sp-letter sp-gold" style="--i:10">r</span></div><div class="sp-tagline">আর্থিক ব্যবস্থাপনা সিস্টেম</div></div><div class="sp-bar-wrap"><div class="sp-bar"></div></div></div>';
+  var st=d.createElement("style");st.textContent='#eliteSplash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease,transform .7s ease}#eliteSplash.sp-hide{opacity:0;transform:scale(1.04);pointer-events:none}.sp-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,#1a0a4a 0%,#0a0618 40%,#060412 100%)}.sp-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle 300px at 20% 80%,rgba(99,102,241,.18),transparent),radial-gradient(circle 200px at 80% 20%,rgba(192,132,252,.14),transparent)}.sp-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}.sp-dot{position:absolute;border-radius:50%;animation:spFloat linear infinite;opacity:0}@keyframes spFloat{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-10vh) scale(1);opacity:0}}.sp-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:20px}.sp-logo-ring{position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center}.sp-ring-svg{position:absolute;inset:0;width:100%;height:100%;animation:spRingSpin 8s linear infinite}@keyframes spRingSpin{to{transform:rotate(360deg)}}.sp-diamond{font-size:46px;line-height:1;animation:spDiamondIn .8s cubic-bezier(.34,1.56,.64,1) .3s both;filter:drop-shadow(0 0 18px rgba(192,132,252,.8)) drop-shadow(0 0 36px rgba(99,102,241,.5))}@keyframes spDiamondIn{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0deg);opacity:1}}.sp-name-wrap{text-align:center}.sp-name{position:relative;display:inline-block;font-family:"Inter",sans-serif;font-size:clamp(28px,8vw,48px);font-weight:900;letter-spacing:-.02em;line-height:1.1;overflow:hidden}.sp-letter{display:inline-block;color:#fff;opacity:0;animation:spLetterIn .4s cubic-bezier(.34,1.4,.64,1) calc(.6s + var(--i)*.07s) both;text-shadow:0 0 20px rgba(165,180,252,.9),0 0 40px rgba(99,102,241,.6),0 2px 8px rgba(0,0,0,.5)}.sp-letter.sp-gold{color:#fbbf24;text-shadow:0 0 20px rgba(251,191,36,.9),0 0 40px rgba(245,158,11,.6),0 2px 8px rgba(0,0,0,.5)}.sp-gap{display:inline-block;width:.3em}@keyframes spLetterIn{from{opacity:0;transform:translateY(18px) scale(.8);filter:blur(6px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}.sp-laser{position:absolute;top:0;left:-40%;width:35%;height:100%;background:linear-gradient(90deg,transparent 0%,rgba(165,180,252,.08) 30%,rgba(255,255,255,.55) 50%,rgba(165,180,252,.08) 70%,transparent 100%);transform:skewX(-15deg);animation:spLaser 1.8s ease-in-out 1.4s both;pointer-events:none;z-index:3}@keyframes spLaser{from{left:-40%;opacity:0}20%{opacity:1}80%{opacity:1}to{left:130%;opacity:0}}.sp-tagline{font-family:"Inter",sans-serif;font-size:12px;font-weight:500;color:rgba(165,180,252,.55);letter-spacing:2px;text-transform:uppercase;margin-top:8px;opacity:0;animation:spFadeUp .5s ease 1.8s both}@keyframes spFadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.sp-bar-wrap{width:160px;height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}.sp-bar{height:100%;border-radius:2px;width:0%;background:linear-gradient(90deg,#6366f1,#c084fc,#fbbf24);animation:spBarFill 2.4s ease .5s both;box-shadow:0 0 8px rgba(99,102,241,.6)}@keyframes spBarFill{from{width:0%}to{width:100%}}';
+  d.head.appendChild(st);d.body.insertBefore(s,d.body.firstChild);
+  var pc=s.querySelector("#spParticles"),colors=["rgba(99,102,241,.7)","rgba(192,132,252,.7)","rgba(251,191,36,.6)","rgba(56,189,248,.5)","rgba(52,211,153,.5)"];
+  for(var i=0;i<28;i++){var dd=d.createElement("div");dd.className="sp-dot";var sz=Math.random()*4+2;dd.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+Math.random()*100+"%;background:"+colors[Math.floor(Math.random()*colors.length)]+";animation-duration:"+(Math.random()*6+5)+"s;animation-delay:"+Math.random()*4+"s;box-shadow:0 0 "+sz*2+"px currentColor";pc.appendChild(dd)}
+  setTimeout(function(){s.classList.add("sp-hide");setTimeout(function(){s.remove()},750)},3000);
+})();
+
 
 /* ═══════════════════════ VIEW ROUTER ═══════════════════════ */
 function showView(n){
@@ -920,6 +931,7 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("greet-txt").textContent="স্বাগতম, "+session.username+"!";
   if(session.role==="admin"){document.getElementById("d-adminActions").style.display="";document.getElementById("f-addForm").style.display="";loadUsers()}
   loadDashboard();
+  loadCoin();
   var inp=document.getElementById("tx-searchInp");if(inp)inp.addEventListener("keyup",function(e){if(e.key==="Enter")txSearch()});
   setupDropdown("f-user","f-user-dropdown","f-user-dropdown-icon");
   setupDropdown("c-user","c-user-dropdown","c-user-dropdown-icon");
